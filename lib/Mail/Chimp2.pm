@@ -3,12 +3,12 @@ package Mail::Chimp2;
 use 5.012;
 use Mouse;
 
-# ABSTRACT: 
+# ABSTRACT: Mailchimp V2 API
 
 # VERSION
 
+with 'Web::API';
 use Data::Dump;
-
 
 =head1 SYNOPSIS
 
@@ -25,23 +25,71 @@ Perhaps a little code snippet.
 
 =cut
 
-has 'attr' => (
-    is => 'rw',
+has 'dc' => (
+    is      => 'rw',
+    isa     => 'Str',
+    default => sub { 'us1' },
 );
 
+has 'commands' => (
+    is      => 'rw',
+    default => sub {
+        {
+            # campaign handling
+            campaigns_list => { path => 'campaigns/list' },
 
+            # list handling
+            lists_list    => { path => 'lists/list' },
+            lists_members => {
+                path      => 'lists/members',
+                mandatory => ['id']
+            },
+            lists_batch_subscribe => {
+                path      => 'lists/batch-subscribe',
+                mandatory => [ 'id', 'batch' ]
+            },
+            lists_subscribe => {
+                path      => 'lists/subscribe',
+                mandatory => [ 'id', 'email' ]
+            },
+            lists_unsubscribe => {
+                path      => 'lists/unsubscribe',
+                mandatory => [ 'id', 'email' ]
+            },
 
-=head1 SUBROUTINES/METHODS
+        };
+    });
 
-=head2 method
+=head1 INTERNALS
 
 =cut
 
-sub method {
+sub commands {
     my ($self) = @_;
+    return $self->commands;
 }
 
+=head2 BUILD
 
+basic configuration for the client API happens usually in the BUILD method when using Web::API
+
+=cut
+
+sub BUILD {
+    my ($self) = @_;
+
+    (my $_key, $self->dc) = split(/-/, $self->api_key);
+    $self->user_agent(__PACKAGE__ . ' ' . $Mail::Chimp2::VERSION);
+    $self->strict_ssl(1);
+    $self->content_type('application/json');
+    $self->default_method('POST');
+    $self->extension('json');
+    $self->base_url('https://' . $self->dc . '.api.mailchimp.com/2.0');
+    $self->auth_type('hash_key');
+    $self->api_key_field('apikey');
+
+    return $self;
+}
 
 =head1 BUGS
 
@@ -87,4 +135,4 @@ L<http://cpanratings.perl.org/d/Mail::Chimp2>
 
 =cut
 
-__PACKAGE__->meta->make_immutable();  # End of Mail::Chimp2
+__PACKAGE__->meta->make_immutable();    # End of Mail::Chimp2
