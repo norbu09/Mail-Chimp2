@@ -12,16 +12,34 @@ use Data::Dump;
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+This is a very rudimentary start of a Mailchimp API version 2
+integration. It will be a complete implementation eventually but for now
+all I needed was bulk add addresses to lists, so that is what i covered
+so far.
 
-Perhaps a little code snippet.
+    use Mail::Chimp2;
 
-    use Some::Module;
-    use Data::Dump 'dump';
+    my $chimp = Mail::Chimp2->new(
+        debug   => 1,
+        api_key => 'yourapikey-us1'
+    );
+    dump $chimp->lists_batch_subscribe(
+        id              => 'list_id',
+        double_optin    => 'false',
+        update_existing => 'true',
+        batch           => [ {
+                email      => { email => 'me@example.com' },
+                merge_vars => { FNAME => 'Me', LNAME => 'Example' } 
+        } ]
+    );
+
 
 =head1 ATTRIBUTES
 
-=head2 attr
+=head2 dc
+
+The datacenter attribute is set to the extension of the API key. You can force
+it if you need by setting this attribute.
 
 =cut
 
