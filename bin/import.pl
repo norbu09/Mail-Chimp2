@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env perl ## no critic
 #
 # PODNAME: import.pl
 # VERSION:
