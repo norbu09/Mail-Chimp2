@@ -1,9 +1,10 @@
-#!/usr/bin/env perl ## no critic
+#!/usr/bin/env perl
 #
 # PODNAME: import.pl
 # VERSION:
 # ABSTRACT: simple CSV importer
 
+use strict;
 use 5.010;
 use lib 'lib';
 use Mail::Chimp2;
