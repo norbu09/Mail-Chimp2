@@ -96,7 +96,8 @@ basic configuration for the client API happens usually in the BUILD method when 
 sub BUILD {
     my ($self) = @_;
 
-    (my $_key, $self->dc) = split(/-/, $self->api_key);
+    my ($_key, $_dc) = split(/-/, $self->api_key);
+    $self->dc($_dc) if $_dc;
     $self->user_agent(__PACKAGE__ . ' ' . $Mail::Chimp2::VERSION);
     $self->strict_ssl(1);
     $self->content_type('application/json');
