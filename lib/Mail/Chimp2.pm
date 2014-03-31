@@ -5,7 +5,7 @@ use Mouse;
 
 # ABSTRACT: Mailchimp V2 API
 
-our $VERSION = '0.4'; # VERSION
+our $VERSION = '0.5'; # VERSION
 
 with 'Web::API';
 use Data::Dump;
@@ -85,7 +85,7 @@ Mail::Chimp2 - Mailchimp V2 API
 
 =head1 VERSION
 
-version 0.4
+version 0.5
 
 =head1 SYNOPSIS
 

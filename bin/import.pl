@@ -3,7 +3,7 @@
 ## no critic
 #
 # PODNAME: import.pl
-our $VERSION = '0.4'; # VERSION:
+our $VERSION = '0.5'; # VERSION:
 # ABSTRACT: simple CSV importer
 #
 ## use critic
@@ -76,7 +76,7 @@ import.pl - simple CSV importer
 
 =head1 VERSION
 
-version 0.4
+version 0.5
 
 =head1 AUTHOR
 
